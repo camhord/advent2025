@@ -11,7 +11,6 @@ RV NO_DISPATCHING_CALLS
 RV NO_EXCEPTION_HANDLERS
 RV NO_EXCEPTION_PROPAGATION
 RV NO_EXCEPTIONS
-RV NO_FLOATING_POINT
 RV NO_IO
 RV NO_IMPLICIT_CONDITIONALS
 RV NO_LOCAL_TAGGED_TYPES
@@ -31,12 +30,17 @@ RV NO_IMPLICIT_ALIASING
 RV NO_IMPLICIT_LOOPS
 RV STATIC_DISPATCH_TABLES
 
-U day9%b		day9.adb		163aa225 NE OO SU
+U day9%b		day9.adb		36601c28 NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.containers%s	a-contai.ads		a-contai.ali
 Z ada.containers.generic_array_sort%s
 Z ada.containers.generic_constrained_array_sort%s
+Z ada.containers.hash_tables%s  a-cohata.ads	a-cohata.ali
+Z ada.containers.hash_tables.generic_keys%s
+Z ada.containers.hash_tables.generic_operations%s
+W ada.containers.hashed_sets%s
 Z ada.containers.helpers%s  a-conhel.adb	a-conhel.ali
+Z ada.containers.prime_numbers%s  a-coprnu.adb	a-coprnu.ali
 W ada.containers.vectors%s
 Z ada.exceptions%s	a-except.adb		a-except.ali
 Z ada.finalization%s	a-finali.ads		a-finali.ali
@@ -52,9 +56,11 @@ W ada.text_io%s		a-textio.adb		a-textio.ali
 Z ada.unchecked_deallocation%s
 Z system%s		system.ads		system.ali
 Z system.concat_2%s	s-conca2.adb		s-conca2.ali
+Z system.concat_3%s	s-conca3.adb		s-conca3.ali
 Z system.concat_5%s	s-conca5.adb		s-conca5.ali
 Z system.finalization_primitives%s  s-finpri.adb  s-finpri.ali
 Z system.img_address_64%s  s-imad64.ads		s-imad64.ali
+Z system.img_int%s	s-imgint.ads		s-imgint.ali
 Z system.img_lli%s	s-imglli.ads		s-imglli.ali
 Z system.put_images%s	s-putima.adb		s-putima.ali
 Z system.return_stack%s	s-retsta.ads		s-retsta.ali
@@ -65,7 +71,7 @@ Z system.storage_elements%s  s-stoele.ads	s-stoele.ali
 Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
 Z system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
 Z system.stream_attributes%s  s-stratt.adb	s-stratt.ali
-Z system.val_lli%s	s-vallli.ads		s-vallli.ali
+Z system.val_int%s	s-valint.ads		s-valint.ali
 
 D ada.ads		20251112120728 76789da1 ada%s
 D a-charac.ads		20251112120728 2d3ec45b ada.characters%s
@@ -75,8 +81,16 @@ D a-cgarso.ads		20251112120728 9129bfa8 ada.containers.generic_array_sort%s
 D a-cgarso.adb		20251112120728 59f5315a ada.containers.generic_array_sort%b
 D a-cgcaso.ads		20251112120728 9f1e835c ada.containers.generic_constrained_array_sort%s
 D a-cgcaso.adb		20251112120728 21f0752d ada.containers.generic_constrained_array_sort%b
+D a-cohata.ads		20251112120728 bea783e3 ada.containers.hash_tables%s
+D a-chtgke.ads		20251112120728 20177f7b ada.containers.hash_tables.generic_keys%s
+D a-chtgke.adb		20251112120728 fdf2dddc ada.containers.hash_tables.generic_keys%b
+D a-chtgop.ads		20251112120728 11c5978a ada.containers.hash_tables.generic_operations%s
+D a-chtgop.adb		20251112120728 c3ccdc4f ada.containers.hash_tables.generic_operations%b
+D a-cohase.ads		20251112120728 4c12bfe7 ada.containers.hashed_sets%s
+D a-cohase.adb		20251112120728 55fa124f ada.containers.hashed_sets%b
 D a-conhel.ads		20251112120728 46fe1ce3 ada.containers.helpers%s
 D a-conhel.adb		20251112120728 854d323e ada.containers.helpers%b
+D a-coprnu.ads		20251112120728 24215258 ada.containers.prime_numbers%s
 D a-convec.ads		20251112120728 91fb49f3 ada.containers.vectors%s
 D a-convec.adb		20251112120728 b2ed0168 ada.containers.vectors%b
 D a-except.ads		20251112120728 e7970cd9 ada.exceptions%s
@@ -97,7 +111,7 @@ D a-tags.ads		20251112120728 fbca0ad5 ada.tags%s
 D a-textio.ads		20251112120728 34ef47de ada.text_io%s
 D a-unccon.ads		20251112120728 0e9b276f ada.unchecked_conversion%s
 D a-uncdea.ads		20251112120728 c3a8ac65 ada.unchecked_deallocation%s
-D day9.adb		20251210022009 a6222858 day9%b
+D day9.adb		20251210060055 ab8fc93b day9%b
 D interfac.ads		20251112120728 9111f9c1 interfaces%s
 D i-c.ads		20251112120728 e94c966a interfaces.c%s
 D i-cstrea.ads		20251112120728 ffd01b9d interfaces.c_streams%s
@@ -106,6 +120,7 @@ D s-atocou.ads		20251112120728 dc18efc3 system.atomic_counters%s
 D s-atocou.adb		20251112120728 6fe685de system.atomic_counters%b
 D s-atopri.ads		20251112120728 e19c1d89 system.atomic_primitives%s
 D s-conca2.ads		20251112120728 b5fb73f7 system.concat_2%s
+D s-conca3.ads		20251112120728 8a7a19a2 system.concat_3%s
 D s-conca5.ads		20251112120728 4099d1db system.concat_5%s
 D s-crtl.ads		20251112120728 beb39b9e system.crtl%s
 D s-exctab.ads		20251112120728 91bef6ef system.exception_table%s
@@ -115,6 +130,7 @@ D s-finroo.ads		20251112120728 0a7c3ed4 system.finalization_root%s
 D s-imagea.ads		20251112120728 c875d703 system.image_a%s
 D s-imagei.ads		20251112120728 5e131ce0 system.image_i%s
 D s-imad64.ads		20251112120728 41fa65e5 system.img_address_64%s
+D s-imgint.ads		20251112120728 67e4edfb system.img_int%s
 D s-imglli.ads		20251112120728 d88f4f3b system.img_lli%s
 D s-memory.ads		20251112120728 18949c1a system.memory%s
 D s-oscons.ads		20251112120728 2b1d2f1e system.os_constants%s
@@ -133,98 +149,165 @@ D s-stposu.ads		20251112120728 e0b9fefd system.storage_pools.subpools%s
 D s-stratt.ads		20251112120728 516607ae system.stream_attributes%s
 D s-traent.ads		20251112120728 c81cbf8c system.traceback_entries%s
 D s-unstyp.ads		20251112120728 fa2a7f59 system.unsigned_types%s
-D s-vallli.ads		20251112120728 353103fd system.val_lli%s
-D s-valllu.ads		20251112120728 4134fa35 system.val_llu%s
+D s-valint.ads		20251112120728 8bab724f system.val_int%s
 D s-valspe.ads		20251112120728 f810d31c system.val_spec%s
+D s-valuns.ads		20251112120728 f7ddb71d system.val_uns%s
 D s-valuei.ads		20251112120728 d9377ca5 system.value_i%s
 D s-vaispe.ads		20251112120728 8280550e system.value_i_spec%s
 D s-valueu.ads		20251112120728 a38d32a6 system.value_u%s
 D s-vauspe.ads		20251112120728 89269ba5 system.value_u_spec%s
+D s-vs_int.ads		20251112120728 06b6b724 system.vs_int%s
 D s-vs_lli.ads		20251112120728 b945cf7d system.vs_lli%s
 D s-vs_llu.ads		20251112120728 8f3536c5 system.vs_llu%s
+D s-vs_uns.ads		20251112120728 e7f47a27 system.vs_uns%s
 D s-wchcon.ads		20251112120728 d9032363 system.wch_con%s
 G a e
-G c Z b b [day9 standard 7 11 none]
+G c Z b b [day9 standard 9 11 none]
 X 1 ada.ads
-18K9*Ada 22e8 31|1r6 1r23 2r6 2r23 3r6 3r29 4r6 4r45 5r6 11r31 14r33 28r15
+18K9*Ada 22e8 39|1r6 2r6 3r6 3r23 4r6 4r23 5r6 5r29 6r6 6r45 7r6 19r41 21r14
+. 24r31 27r32 33r33 47r15
 X 4 a-contai.ads
-16K13*Containers 28e19 31|5r10 11r35 14r37
+16K13*Containers 28e19 39|1w10 2r10 7r10 19r45 21r18 24r35 27r36 33r37
+19M9*Hash_Type 39|19r56 21r29
 X 5 a-cgarso.ads
 23u26*Generic_Array_Sort 4|16k13
 X 6 a-cgarso.adb
-41U14 Sort[7|24] 8|32b26[12|900[31|15]]
+41U14 Sort[7|24] 8|32b26[20|900[39|34]]
 X 7 a-cgcaso.ads
 24u26*Generic_Constrained_Array_Sort 4|16k13
-X 11 a-convec.ads
-62I9 Index_Type 31|11r55 14r57
-63+9 Element_Type 31|11r78 14r80
-74k24*Vectors 878e27 31|5w21 11r46 14r48
+X 14 a-cohase.ads
+43+9 Element_Type 39|28r7
+45V18 Hash{4|19M9} 39|29r7
+47V18 Equivalent_Elements{boolean} 39|30r7
+52k24*Hashed_Sets 663e31 39|2w21 27r47
+59R9 Set<22|43R9> 39|31r31[27]
+202U14 Insert 39|139s28[27] 146s28[27]
+202r47 New_Item{39|10R9} 39|139r35[27] 146r35[27]
+343V13 Contains{boolean} 39|64s25[27] 69s41[27] 93s25[27] 98s41[27] 138s32[27]
+. 145s32[27] 191s25[27]
+X 16 a-conhel.ads
+84R12 Reference_Control_Type<22|43R9>
+X 19 a-convec.ads
+62I9 Index_Type 39|24r55 33r57
+63+9 Element_Type 39|24r78 33r80
+74k24*Vectors 878e27 39|7w21 24r46 33r48
 81I12 Extended_Index{integer}
-91R9 Vector<14|43R9> 31|12r25[11] 16r26[14]
-483U14 Append 31|52s14[11] 57s16[14]
-484r22 New_Item{31|8R9} 31|52r21[11] 57r23[14]
-560V13 First_Index{integer} 31|55s20[11] 63s19[14]
-570V13 Last_Index{81I12[31|11]} 31|55s40[11] 56s30[11] 63s38[14]
-685k12 Generic_Sorting 31|15r44[14]
-692U17 Sort 31|61s15[15]
-X 12 a-convec.adb
-900U20 Sort[5|23] 6|32b26[31|15]
-X 16 a-iteint.ads
+91R9 Vector<22|43R9> 39|25r25[24] 35r26[33]
+483U14 Append 39|133s14[24] 240s19[33]
+484r22 New_Item{39|10R9} 39|133r21[24] 240r26[33]
+560V13 First_Index{integer} 39|234s23[24]
+570V13 Last_Index{81I12[39|24]} 39|234s43[24] 235s33[24] 249s45[33]
+685k12 Generic_Sorting 39|34r44[33]
+692U17 Sort 39|247s15[34]
+X 20 a-convec.adb
+900U20 Sort[5|23] 6|32b26[39|34]
+X 24 a-iteint.ads
 24h9 Forward_Iterator
-32h9 Reversible_Iterator<24R9[11|119]>
-X 17 a-numeri.ads
-20K13*Numerics 36e17 31|4r10 4r49
-X 18 a-nuelfu.ads
-18K22*Elementary_Functions[19|39] 31|4w19 4r58
-X 19 a-ngelfu.ads
-53V13*Sqrt{float} 31|38s14[18|18]
-X 21 a-string.ads
-16K13*Strings 35e16 31|2w10 2r27 3r10 3r33 28r19
-X 22 a-strfix.ads
-49K21*Fixed 1390e22 31|3w18 3r41 28r27
-252V13*Index{natural} 31|28s33
-X 28 a-textio.ads
-58K13*Text_IO 785e16 31|1w10 1r27
-67P9*File_Type 31|46r17
-69n23*In_File{69E9} 31|49r21
-115U14*Open 31|49s4
-341V13*End_Of_File{boolean} 31|51s14
-549V13*Get_Line{string} 31|52s43
-565U14*Put_Line 31|64s7
-X 31 day9.adb
-7U11*Day9 7b11 66l5 66t9
-8R9 Point 10e14 11r94 18r27 23r54 24r19 36r28 41r24
-9i7 X{long_integer} 20r22 29m17 38r33 38r39 43r21 43r27
-9i10 Y{long_integer} 20r40 31m17 38r57 38r63 43r44 43r50
-11K12 PointVector[11|74] 12r13
-12r4 Points{11|91R9[11]} 52m7 52r7 55r13 55r33 56r23 57r40 57r51
-14K12 IntegerVector[11|74] 15r30 16r12
-15K12 IntVecSort[11|685] 61r4
-16r4 Areas{11|91R9[14]} 57m10 57r10 61m21 61r21 63r13 63r32 64r36
-18V13 To_String{string} 18b13 18>23 21l8 21t17
-18r23 N{8R9} 20r20 20r38
-23V13 ParseNode{8R9} 23b13 23>24 34l8 34t17 52s33
-23a24 Point_String{string} 25r27 28r39 28r59 29r41 31r41 31r64
-24r7 To_Return{8R9} 29m7 31m7 33r14
-25i7 First{positive} 28r52 29r54
-26i7 Last{natural} 28m7 29r61 31r54
-36V13 Distance{float} 36b13 36>22 36>25 39l8 39t16
-36r22 L{8R9} 38r31 38r55
-36r25 R{8R9} 38r37 38r61
-41V13 Area{long_integer} 41b13 41>18 41>21 44l8 44t12 57s35
-41r18 L{8R9} 43r19 43r42
-41r21 R{8R9} 43r25 43r48
-46p4 Input_File{28|67P9} 49m9 49r9 51r26 52r52
-47a4 File_Name{string} 49r30
-55i8 I{integer} 56r16 57r47
-56i11 J{integer} 57r58
-63i8 I{integer} 64r42
-X 35 system.ads
+32h9 Reversible_Iterator<24R9[19|119]>
+X 25 a-numeri.ads
+20K13*Numerics 36e17 39|6r10 6r49
+X 26 a-nuelfu.ads
+18K22*Elementary_Functions[27|39] 39|6w19 6r58
+X 29 a-string.ads
+16K13*Strings 35e16 39|4w10 4r27 5r10 5r33 47r19
+X 30 a-strfix.ads
+49K21*Fixed 1390e22 39|5w18 5r41 47r27
+252V13*Index{natural} 39|47s33
+X 36 a-textio.ads
+58K13*Text_IO 785e16 39|3w10 3r27
+67P9*File_Type 39|152r17
+69n23*In_File{69E9} 39|157r21
+115U14*Open 39|157s4
+284U14*New_Line 39|197s7
+341V13*End_Of_File{boolean} 39|169s17
+515U14*Put 39|192s13 194s13
+549V13*Get_Line{string} 39|162s26 170s31
+565U14*Put_Line 39|238s16 249s4
+X 39 day9.adb
+9U11*Day9 9b11 261l5 261t9
+10R9 Point 12e14 14r30 19r27 24r94 28r30 37r27 42r54 43r19 55r54 84r54 113r37
+. 121r30 130r40 131r18 155r15 160r30
+11i7 X{integer} 16r16 16r22 21r42 39r22 48m17 87r21 115r43 115r48 115r66
+. 115r71 116r45 116r50 116r68 116r73 117r28 118r28 127r33 127r39 136r39 136r47
+. 136r71 136r79 144r34 171r21 171r30 172m17 172r30 173r24 173r33 174m17 174r30
+. 190r20 190r27
+11i10 Y{integer} 16r30 16r36 21r53 39r40 50m17 58r21 115r26 116r28 117r45
+. 117r50 117r68 117r73 118r45 118r50 118r68 118r73 127r68 127r74 135r18 135r27
+. 137r37 143r39 143r47 143r71 143r79 176r21 176r30 177m17 177r30 178r24 178r33
+. 179m17 179r30 189r17 189r24
+14V13 Point_Equ{boolean} 14b13 14>23 14>26 17l8 17t17 30r30
+14r23 R{10R9} 16r14 16r28
+14r26 L{10R9} 16r20 16r34
+19V13 PointHash{4|19M9} 19b13 19>23 22l8 22t17 29r30
+19r23 P{10R9} 21r40 21r51
+24K12 PointVector[19|74] 25r13
+25r4 Points{19|91R9[24]} 133m7 133r7 234r16 234r36 235r26 236r28 236r39 238r36
+. 238r59
+27K12 PointHashSet[14|52] 31r18
+31r4 GreenPoints{14|59R9[27]} 64r13 69r29 93r13 98r29 138r20 139m16 139r16
+. 145r20 146m16 146r16 191r13
+33K12 IntegerVector[19|74] 34r30 35r12
+34K12 IntVecSort[19|685] 247r4
+35r4 Areas{19|91R9[33]} 240m13 240r13 247m21 247r21 249r33 249r39
+37V13 To_String{string} 37b13 37>23 40l8 40t17 238s26 238s49
+37r23 N{10R9} 39r20 39r38
+42V13 ParseNode{10R9} 42b13 42>24 53l8 53t17 162s16 170s21
+42a24 Point_String{string} 44r27 47r39 47r59 48r36 50r36 50r59
+43r7 To_Return{10R9} 48m7 50m7 52r14
+44i7 First{positive} 47r52 48r49
+45i7 Last{natural} 47m7 48r56 50r49
+55V13 CheckCol{boolean} 55b13 55>22 55>25 55>31 55>47 82l8 82t16 117s16 118s16
+55i22 X{integer} 64r36 69r52
+55i25 MinY{integer} 59r17
+55i31 MaxY{integer} 58r24
+55r47 MinP{10R9} 58r16
+56b7 In_Loop{boolean} 59r30 66m16 66r31 73m16 73r31 80r14
+56b16 Latch{boolean} 59r46 65r16 67m16 69m16 72r16 74m16
+58i11 Y{integer} 59r13 64r38 69r54
+84V13 CheckRow{boolean} 84b13 84>22 84>25 84>31 84>47 111l8 111t16 115s14
+. 116s16
+84i22 Y{integer} 93r38 98r58
+84i25 MinX{integer} 88r17
+84i31 MaxX{integer} 87r24
+84r47 MinP{10R9} 87r16
+85b7 In_Loop{boolean} 88r30 95m16 95r31 102m16 102r31 109r14
+85b16 Latch{boolean} 88r46 94r16 96m16 98m16 101r16 103m16
+87i11 X{integer} 88r13 93r36 98r52
+113V13 CheckBounds{boolean} 113b13 113>25 113>28 113>31 119l8 119t19 123s14
+113r25 L{10R9} 115r24 115r41 115r64 116r43 116r66 117r26 117r43 117r66 118r43
+. 118r66
+113r28 R{10R9} 115r46 115r69 116r26 116r48 116r71 117r48 117r71 118r26 118r48
+. 118r71
+113r31 MinP{10R9} 115r75 116r77 117r77 118r77
+121V13 Area{long_integer} 121b13 121>18 121>21 121>24 128l8 128t12 236s23
+121r18 L{10R9} 123r27 127r31 127r66
+121r21 R{10R9} 123r30 127r37 127r72
+121r24 MinP{10R9} 123r33
+130U14 AddPoints 130b14 130>24 130>33 150l8 150t17 182s10 186s7
+130r24 Current{10R9} 133r33 135r10 136r31 136r63 137r29 143r31 143r63 144r26
+130r33 Last{10R9} 135r22 136r42 136r74 143r42 143r74
+131r7 NewGreen{10R9} 137m13 138r41 139r47 144m13 145r41 146r47
+136i14 I{integer} 137r26
+143i14 I{integer} 144r37
+152p4 Input_File{36|67P9} 157m9 157r9 162r35 169r29 170r41
+153a4 File_Name{string} 157r30
+155r4 Min{10R9} 164m7 171r26 172m13 176r26 177m13 189r13 190r16 236r50
+155r9 Max{10R9} 165m7 173r29 174m13 178r29 179m13 189r20 190r23
+160r7 Current{10R9} 170m10 171r13 172r22 173r16 174r22 176r13 177r22 178r16
+. 179r22 182r21 183r18 186r25
+160r16 Last{10R9} 167m7 182r30 183m10
+160r22 First{10R9} 162m7 164r14 165r14 167r15 186r18
+189i8 Y{integer} 191r39
+190i11 X{integer} 191r36
+232i7 Area_I{long_integer} 236m13 237r16 238r91 240r38
+234i11 I{integer} 235r19 236r35 238r43
+235i14 J{integer} 236r46 238r66
+X 43 system.ads
 67M9*Address
-X 50 s-memory.ads
-51V13*Alloc{35|67M9} 101i<c,__gnat_malloc>22
+X 60 s-memory.ads
+51V13*Alloc{43|67M9} 101i<c,__gnat_malloc>22
 66U14*Free 102i<c,__gnat_free>22
-74V13*Realloc{35|67M9} 103i<c,__gnat_realloc>22
-X 60 s-stalib.adb
+74V13*Realloc{43|67M9} 103i<c,__gnat_realloc>22
+X 70 s-stalib.adb
 87U14 Break_Start 88i<c,__gnat_break_start>22
 
