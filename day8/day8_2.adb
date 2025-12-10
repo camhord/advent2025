@@ -192,18 +192,5 @@ begin
          exit;
       end if;
    end loop;
-
-   CircuitSorting.Sort (Circuits);
-
-   declare 
-      Total : Integer := 1;
-   begin
-      for I in reverse Circuits.Last_Index - 2..Circuits.Last_Index loop
-         Put(Circuits(I).Nodes.Length'Image & " *");
-         Total := Total * Integer(Circuits(I).Nodes.Length);
-      end loop;
-
-      Put_Line ("=" & Total'Image);
-   end;
    
 end Day8_2;

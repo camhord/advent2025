@@ -32,7 +32,7 @@ RV NO_IMPLICIT_ALIASING
 RV NO_IMPLICIT_LOOPS
 RV STATIC_DISPATCH_TABLES
 
-U day8_2%b		day8_2.adb		a3b9324a NE OO SU
+U day8_2%b		day8_2.adb		09e45a17 NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.containers%s	a-contai.ads		a-contai.ali
 Z ada.containers.generic_array_sort%s
@@ -126,7 +126,7 @@ D a-tags.ads		20251112120728 fbca0ad5 ada.tags%s
 D a-textio.ads		20251112120728 34ef47de ada.text_io%s
 D a-unccon.ads		20251112120728 0e9b276f ada.unchecked_conversion%s
 D a-uncdea.ads		20251112120728 c3a8ac65 ada.unchecked_deallocation%s
-D day8_2.adb		20251210013941 7baa367f day8_2%b
+D day8_2.adb		20251210014120 d1f75e22 day8_2%b
 D interfac.ads		20251112120728 9111f9c1 interfaces%s
 D i-c.ads		20251112120728 e94c966a interfaces.c%s
 D i-cstrea.ads		20251112120728 ffd01b9d interfaces.c_streams%s
@@ -207,7 +207,7 @@ X 14 a-cohase.ads
 52k24*Hashed_Sets 663e31 46|1w21 2w21 52r46
 59R9 Set<28|43R9> 46|55r27[52]
 115V13 To_Set{59R9[46|52]} 46|148s43[52] 178s57[52]
-134V13 Length{4|22I9} 46|59s30[52] 59s56[52] 202s32[52] 203s53[52]
+134V13 Length{4|22I9} 46|59s30[52] 59s56[52]
 202U14 Insert 46|139s34[52] 144s35[52] 149s24[52]
 251U14 Union 46|129s31[52]
 343V13 Contains{boolean} 46|117s24[52] 120s27[52] 138s38[52] 143s39[52]
@@ -237,9 +237,9 @@ X 25 a-convec.ads
 514U14 Delete 46|130s19[61]
 560V13 First_Index{integer} 46|115s25[61] 166s27[45] 183s19[48]
 570V13 Last_Index{81I12[46|61]} 46|115s47[61] 166s51[45] 168s37[45] 183s38[48]
-. 184s20[48] 201s33[61] 201s58[61]
+. 184s20[48]
 685k12 Generic_Sorting 46|49r43[48] 62r48[61]
-692U17 Sort 46|181s17[49] 196s19[62]
+692U17 Sort 46|181s17[49]
 X 26 a-convec.adb
 900U20 Sort[5|23] 6|32b26[46|62]
 X 30 a-iteint.ads
@@ -267,11 +267,10 @@ X 43 a-textio.ads
 69n23*In_File{69E9} 46|156r21
 115U14*Open 46|156s4
 341V13*End_Of_File{boolean} 46|158s14
-515U14*Put 46|202s10
 549V13*Get_Line{string} 46|159s35
-565U14*Put_Line 46|126s7 136s10 141s10 146s10 152s10 191s10 206s7
+565U14*Put_Line 46|126s7 136s10 141s10 146s10 152s10 191s10
 X 46 day8_2.adb
-11U11*Day8_2 11b11 209l5 209t11
+11U11*Day8_2 11b11 196l5 196t11
 12R9 Node 16e14 18r25 23r29 28r28 35r14 36r15 45r93 52r75 65r28 73r53 74r19
 . 91r27 163r21
 13i7 X{positive} 20r16 20r22 25r16 25r22 31r41 67r33 67r39 79m17 93r22 191r67
@@ -303,15 +302,15 @@ X 46 day8_2.adb
 52K12 NodeHashSet[14|52] 55r15 148r31 178r45
 54R9 Circuit 56e14 57r25 61r96 101r27 111r23
 55r7 Nodes{14|59R9[52]} 59r24 59r50 104r18 117r18 120r21 129m25 129r53 138r32
-. 139m28 143r33 144m29 148m22 149m18 178m36 202r26 203r47
+. 139m28 143r33 144m29 148m22 149m18 178m36
 57V14 "<"{boolean} 25|676i22 46|57b14 57>18 57>21 60l9 60t11
 57r18 L{54R9} 59r22
 57r21 R{54R9} 59r48
 61K12 CircuitVector[25|74] 62r34 63r15
-62K12 CircuitSorting[25|685] 196r4
+62K12 CircuitSorting[25|685]
 63r4 Circuits{25|91R9[61]} 115r16 115r38 116r18 129r10 129r37 130m10 130r10
 . 136r30 138r17 139r13 141r30 143r17 144r13 146r30 150m10 150r10 178m7 178r7
-. 190r18 196m25 196r25 201r24 201r49 202r14 203r35
+. 190r18
 65V13 Distance{float} 65b13 65>22 65>25 68l8 68t16 170s21
 65r22 L{12R9} 67r31 67r55 67r79
 65r25 R{12R9} 67r37 67r61 67r85
@@ -349,8 +348,6 @@ X 46 day8_2.adb
 168i14 N{integer} 169r33
 177r8 N{12R9} 178r64
 183i8 I{integer} 184r10 188r27 191r59 191r92
-199i7 Total{integer} 203m10 203r19 206r23
-201i11 I{integer} 202r23 203r44
 X 50 system.ads
 67M9*Address
 X 72 s-memory.ads
