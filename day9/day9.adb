@@ -110,12 +110,150 @@ procedure Day9 is
 
    end CheckRow;
 
-   function CheckBounds(L, R, MinP: Point) return Boolean is 
+   type Side is (Top, Right, Left, Bottom);
+
+   function Contains(BigL, BigR, LilL, LilR : Point) return Boolean is
+      BigMin, BigMax, LilMin, LilMax : Integer := 0;
    begin
-      return CheckRow (L.Y, Integer'Min(L.X, R.X), Integer'Max(L.X, R.X), MinP) and 
-               CheckRow (R.Y, Integer'Min(L.X, R.X), Integer'Max(L.X, R.X), MinP) and 
-               CheckCol (L.X, Integer'Min(L.Y, R.Y), Integer'Max(L.Y, R.Y), MinP) and 
-               CheckCol (R.X, Integer'Min(L.Y, R.Y), Integer'Max(L.Y, R.Y), MinP);
+      if BigL.X = BigR.X and BigL.X = LilL.X and BigL.X = LilR.X then
+         BigMin := Integer'Min(BigL.Y, BigR.Y);
+         BigMax := Integer'Max(BigL.Y, BigR.Y);
+         LilMin := Integer'Min(LilL.Y, LilR.Y);
+         LilMax := Integer'Max(LilL.Y, LilR.Y);
+      elsif BigL.Y = BigR.Y and BigL.Y = LilL.Y and BigL.Y = LilR.Y then
+         BigMin := Integer'Min(BigL.X, BigR.X);
+         BigMax := Integer'Max(BigL.X, BigR.X);
+         LilMin := Integer'Min(LilL.X, LilR.X);
+         LilMax := Integer'Max(LilL.X, LilR.X);
+      end if;
+
+      return BigMin <= LilMin and BigMax >= LilMax and not (BigMin = LilMin and BigMax = LilMax);
+   end Contains;
+
+   function SinglValueContains(RL, RR, P : Point) return Boolean is
+   begin
+      if RL.X = RR.X then 
+         return Integer'Min(RL.Y, RR.Y) < P.Y and Integer'Max(RL.Y, RR.Y) > P.Y;
+      else
+         return Integer'Min(RL.X, RR.X) < P.X and Integer'Max(RL.X, RR.X) > P.X;
+      end if;
+   end SinglValueContains;
+
+   function CheckIntersection(L, R : Point; S : Side) return Boolean is
+      Curr, Last, Next, DLast : Point;
+      Horizontal : Boolean := L.Y = R.Y;
+   begin
+      for I in Points.First_Index..Points.Last_Index loop
+         if I = Points.First_Index then
+            Last := Points(Points.Last_Index);
+         else 
+            Last := Points(I - 1);
+         end if;
+         Curr := Points(I);
+         if I = Points.Last_Index then 
+            Next := Points(Points.First_Index);
+         else 
+            Next := Points(I + 1);
+         end if;
+         if I < Points.First_Index + 2 then
+            DLast := Points(Points.Last_Index - (I - Points.First_Index));
+         else 
+            DLast := Points(I - 2);
+         end if;
+
+         if Horizontal and Curr.X = Last.X then
+            if Integer'Min(Last.Y, Curr.Y) <= L.Y and Integer'Max(Last.Y, Curr.Y) >= L.Y then
+               if Integer'Min(L.X, R.X) <= Last.X and Integer'Max(L.X, R.X) >= Last.X then
+                  if S = Bottom and ((Last.Y = L.Y and Curr.Y > L.Y) or (Curr.Y = L.Y and Last.Y > L.Y)) then
+                     if L.X /= Last.X and R.X /= Last.X then
+                        --Put_Line ("Fail 1");
+                        return true;
+                     end if;
+                  elsif S = Top and ((Last.Y = L.Y and Curr.Y < L.Y) or (Curr.Y = L.Y and Last.Y < L.Y)) then 
+                     if L.X /= Last.X and R.X /= Last.X then
+                        --Put_Line ("Fail 2");
+                        return true;
+                     end if;
+                  elsif L.Y /= Curr.Y and L.Y /= Last.Y and Curr.X /= L.X and Curr.X /= R.X then
+                        --Put_Line ("Fail 3");
+                        --Put_Line (To_String(L) & "-" & To_String (R) & " and " & To_String (Last) & "-" & To_String (Curr));
+                     return true;
+                  end if;
+               end if;
+            end if;
+         elsif not Horizontal and Curr.Y = Last.Y then
+            if Integer'Min(Last.X, Curr.X) < L.X and Integer'Max(Last.X, Curr.X) > L.X then
+               if Integer'Min(L.Y, R.Y) < Last.Y and Integer'Max(L.Y, R.Y) > Last.Y then
+                  if S = Left and ((Last.X = L.X and Curr.X > L.X) or (Curr.X = L.X and Last.X > L.X)) then
+                     if L.Y /= Last.Y and R.Y /= Last.Y then 
+                        --Put_Line ("Fail 4");
+                        return true;
+                     end if;
+                  elsif S = Right and ((Last.X = L.X and Curr.X < L.X) or (Curr.X = L.X and Last.X < L.X)) then 
+                     if L.Y /= Last.Y and R.Y /= Last.Y then 
+                        --Put_Line ("Fail 5");
+                        return true;
+                     end if;
+                  elsif L.X /= Curr.X and L.X /= Last.X and Curr.Y /= L.Y and Curr.Y /= R.Y then
+                        --Put_Line ("Fail 6");
+                     return true;
+                  end if;
+               end if;
+            end if;
+         elsif Contains (BigL => L, BigR => R, LilL => Last, LilR => Curr) then 
+            --Put_Line (To_String(L) & "-" & To_String (R) & " Contains " & To_String (Last) & "-" & To_String (Curr));
+            case S is
+               when Top =>
+                  if (SinglValueContains(L, R, Curr) and Next.Y < L.Y) or (SinglValueContains(L, R, Last) and DLast.Y < L.Y) then 
+                     --Put_Line("Fail 7");
+                     return true;
+                  end if;
+               when Bottom => 
+                  if (SinglValueContains(L, R, Curr) and Next.Y > L.Y) or (SinglValueContains(L, R, Last) and DLast.Y > L.Y) then 
+                     --Put_Line("Fail 8");
+                     return true;
+                  end if;
+               when Left => 
+                  if (SinglValueContains(L, R, Curr) and Next.X > L.X) or (SinglValueContains(L, R, Last) and DLast.X > L.X) then 
+                     --Put_Line("Fail 9");
+                     return true;
+                  end if;
+               when Right =>
+                  if (SinglValueContains(L, R, Curr) and Next.X < L.X) or (SinglValueContains(L, R, Last) and DLast.X < L.X) then 
+                     --Put_Line("Fail 10");
+                     return true;
+                  end if;
+               when others =>
+                  return true;
+            end case;
+         end if;
+      end loop;
+
+      return false;
+   end CheckIntersection;
+
+   function CheckBounds(L, R, MinP: Point) return Boolean is 
+      MinX, MinY, MaxX, MaxY : Integer;
+   begin
+      if L.X = R.X or L.Y = R.Y then 
+         --Put_Line ("Fail Line");
+         return false;
+      end if;
+
+      MinX := Integer'Min(L.X, R.X);
+      MaxX := Integer'Max(L.X, R.X);
+      MinY := Integer'Min(L.Y, R.Y);
+      MaxY := Integer'Max(L.Y, R.Y);
+
+      return not CheckIntersection ((MinX, MaxY), (MinX, MinY), Left) and
+            not CheckIntersection ((MinX, MaxY), (MaxX, MaxY), Top) and
+            not CheckIntersection ((MinX, MinY), (MaxX, MinY), Bottom) and
+            not CheckIntersection ((MaxX, MaxY), (MaxX, MinY), Right);
+
+      --return CheckRow (L.Y, Integer'Min(L.X, R.X), Integer'Max(L.X, R.X), MinP) and 
+      --         CheckRow (R.Y, Integer'Min(L.X, R.X), Integer'Max(L.X, R.X), MinP) and 
+      --         CheckCol (L.X, Integer'Min(L.Y, R.Y), Integer'Max(L.Y, R.Y), MinP) and 
+      --         CheckCol (R.X, Integer'Min(L.Y, R.Y), Integer'Max(L.Y, R.Y), MinP);
    end CheckBounds;
 
    function Area(L, R, MinP: Point) return Long_Integer is 
@@ -132,25 +270,25 @@ procedure Day9 is
    begin 
       Points.Append(New_Item => Current);
 
-      if Current.Y = Last.Y then 
-         for I in Integer'Min(Current.X, Last.X)..Integer'Max(Current.X, Last.X) loop
-            NewGreen := (I, Current.Y);
-            if not GreenPoints.Contains(NewGreen) then 
-               GreenPoints.Insert(New_Item => NewGreen);
-            end if;
-         end loop;
-      else 
-         for I in Integer'Min(Current.Y, Last.Y)..Integer'Max(Current.Y, Last.Y) loop
-            NewGreen := (Current.X, I);
-            if not GreenPoints.Contains(NewGreen) then 
-               GreenPoints.Insert(New_Item => NewGreen);
-            end if;
-         end loop;
-      end if;
+      --if Current.Y = Last.Y then 
+      --   for I in Integer'Min(Current.X, Last.X)..Integer'Max(Current.X, Last.X) loop
+      --      NewGreen := (I, Current.Y);
+      --      if not GreenPoints.Contains(NewGreen) then 
+      --         GreenPoints.Insert(New_Item => NewGreen);
+      --      end if;
+      --   end loop;
+      --else 
+      --   for I in Integer'Min(Current.Y, Last.Y)..Integer'Max(Current.Y, Last.Y) loop
+      --      NewGreen := (Current.X, I);
+      --      if not GreenPoints.Contains(NewGreen) then 
+      --         GreenPoints.Insert(New_Item => NewGreen);
+      --      end if;
+      --   end loop;
+      --end if;
    end AddPoints;
 
    Input_File : File_Type;
-   File_Name : String := "input.chk";
+   File_Name : String := "input.txt";
 
    Min, Max : Point;
 begin
@@ -186,16 +324,16 @@ begin
       AddPoints (First, Current);
    end;
 
-   for Y in Min.Y..Max.Y loop
-      for X in Min.X..Max.X loop
-         if GreenPoints.Contains ((X, Y)) then 
-            Put ("#");
-         else
-            Put (".");
-         end if;
-      end loop;
-      New_Line;
-   end loop;
+   --for Y in Min.Y..Max.Y loop
+   --   for X in Min.X..Max.X loop
+   --      if GreenPoints.Contains ((X, Y)) then 
+   --         Put ("#");
+   --      else
+   --         Put (".");
+   --      end if;
+   --   end loop;
+   --   New_Line;
+   --end loop;
 
    -- brute force loop fill
    --declare
@@ -242,7 +380,7 @@ begin
       end loop;
    end;
 
-   --Areas.Append(New_Item => Area((9,5), (2,3), Min));
+   --Areas.Append(New_Item => Area((2,8), (7,6), Min));
 
    IntVecSort.Sort (Areas);
 
